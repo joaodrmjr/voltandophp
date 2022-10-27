@@ -54,6 +54,9 @@ $container["view"] = function ($container) use ($app) {
 $container["HomeController"] = function ($container) {
 	return new App\Controllers\HomeController($container);
 };
+$container["AuthController"] = function ($container) {
+	return new App\Controllers\AuthController($container);
+};
 
 
 // rotas da aplicação
