@@ -33,6 +33,17 @@ $app = new \Slim\App($config);
 $container = $app->getContainer();
 
 
+$capsule = new Illuminate\Database\Capsule\Manager();
+$capsule->addConnection($container["settings"]["db"]);
+$capsule->setAsGlobal();
+$capsule->bootEloquent();
+
+
+$container["db"] = function ($container) use ($capsule) {
+	return $capsule;
+};
+
+
 $container["view"] = function ($container) use ($app) {
 
 	$config = $container->get("settings");
