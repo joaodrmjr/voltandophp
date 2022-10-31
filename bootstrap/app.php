@@ -3,6 +3,7 @@
 // inicia a sessão do app
 session_start();
 
+use Respect\Validation\Validator as v;
 
 require __DIR__ . "/../vendor/autoload.php";
 
@@ -43,6 +44,10 @@ $container["db"] = function ($container) use ($capsule) {
 	return $capsule;
 };
 
+$container["validation"] = function ($container) {
+	return new App\Validation\Validator();
+};
+v::with("App\\Validation\\Rules\\");
 
 $container["view"] = function ($container) use ($app) {
 

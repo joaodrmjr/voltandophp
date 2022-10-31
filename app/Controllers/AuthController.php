@@ -3,6 +3,8 @@
 
 namespace App\Controllers;
 
+use Respect\Validation\Validator as v;
+
 
 use App\Models\User;
 
@@ -22,7 +24,19 @@ class AuthController extends Controller {
 		return $this->view->render($response, "auth/register.twig");
 	}
 
+	public function postRegister($request, $response)
+	{
+		$v = $this->validation->validate($request, [
+			"username" => v::notEmpty()->alnum()->length(6, 15),
+			"email" => v::notEmpty()->email(),
+			"password" => v::notEmpty()->length(8, null),
+			"cpassword" => v::passwdMatch($request->getParam("password"))
+		]);
 
+		if ($v->failed()) {
+			echo $v->first();
+		}
+	}
 
 
 }
