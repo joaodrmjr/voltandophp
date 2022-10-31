@@ -49,6 +49,10 @@ $container["validation"] = function ($container) {
 };
 v::with("App\\Validation\\Rules\\");
 
+$container["flash"] = function () {
+	return new Slim\Flash\Messages();
+};
+
 $container["view"] = function ($container) use ($app) {
 
 	$config = $container->get("settings");
@@ -57,6 +61,8 @@ $container["view"] = function ($container) use ($app) {
 		"debug" => true,
 		"auto_reload" => true
 	]);
+
+	$view->getEnvironment()->addGlobal("flash", $container->flash->getMessages());
 
 	$view->addExtension(new \Slim\Views\TwigExtension(
 		$container->get("router"),

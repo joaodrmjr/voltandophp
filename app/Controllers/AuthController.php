@@ -34,7 +34,8 @@ class AuthController extends Controller {
 		]);
 
 		if ($v->failed()) {
-			echo $v->first();
+			$this->flash->addMessage("error", $v->first());
+			return $response->withRedirect($this->router->pathFor("register"));
 		}
 	}
 
