@@ -4,7 +4,7 @@
 namespace App\Controllers;
 
 use Respect\Validation\Validator as v;
-
+use App\Auth\Auth;
 
 use App\Models\User;
 
@@ -15,6 +15,21 @@ class AuthController extends Controller {
 	{
 
 		return $this->view->render($response, "auth/login.twig");
+	}
+
+	public function postLogin($request, $response)
+	{
+		$login = $this->auth->tryLogin([
+			"username" => $request->getParam("username"),
+			"password" => $request->getParam("password")
+		]);
+		if (!$login) {
+			$this->flash->addMessage("error", $this->auth->getError());
+			return $response->withRedirect($this->router->pathFor("login"));
+		}
+
+		$this->flash->addMessage("success", "Login realizado com sucesso! Seja bem-vindo ".$this->auth->user()->username);
+		return $response->withRedirect($this->router->pathFor("home"));
 	}
 
 	

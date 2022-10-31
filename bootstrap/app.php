@@ -67,17 +67,17 @@ $container["view"] = function ($container) use ($app) {
 		"auto_reload" => true
 	]);
 
+	$view->addExtension(new \Slim\Views\TwigExtension(
+		$container->get("router"),
+		$container->get("request")->getUri()
+	));
+
 	$view->getEnvironment()->addGlobal("flash", $container->flash->getMessages());
 
 	$view->getEnvironment()->addGlobal("auth", [
 		"state" => $container->auth->state(),
 		"user" => $container->auth->user()
 	]);
-
-	$view->addExtension(new \Slim\Views\TwigExtension(
-		$container->get("router"),
-		$container->get("request")->getUri()
-	));
 
 	return $view;
 
