@@ -53,6 +53,11 @@ $container["flash"] = function () {
 	return new Slim\Flash\Messages();
 };
 
+
+$container["auth"] = function ($container) {
+	return new App\Auth\Auth($container);
+};
+
 $container["view"] = function ($container) use ($app) {
 
 	$config = $container->get("settings");
@@ -63,6 +68,11 @@ $container["view"] = function ($container) use ($app) {
 	]);
 
 	$view->getEnvironment()->addGlobal("flash", $container->flash->getMessages());
+
+	$view->getEnvironment()->addGlobal("auth", [
+		"state" => $container->auth->state(),
+		"user" => $container->auth->user()
+	]);
 
 	$view->addExtension(new \Slim\Views\TwigExtension(
 		$container->get("router"),
