@@ -37,6 +37,16 @@ class AuthController extends Controller {
 			$this->flash->addMessage("error", $v->first());
 			return $response->withRedirect($this->router->pathFor("register"));
 		}
+
+
+		User::create([
+			"username" => $request->getParam("username"),
+			"email" => $request->getParam("email"),
+			"password" => password_hash($request->getParam("password"), PASSWORD_DEFAULT)
+		]);
+
+		$this->flash->addMessage("success", "Usuário cadastrado com sucesso! Já pode iniciar sua sessão.");
+		return $response->withRedirect($this->router->pathFor("home"));
 	}
 
 
