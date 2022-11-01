@@ -42,8 +42,8 @@ class AuthController extends Controller {
 	public function postRegister($request, $response)
 	{
 		$v = $this->validation->validate($request, [
-			"username" => v::notEmpty()->alnum()->length(6, 15),
-			"email" => v::notEmpty()->email(),
+			"username" => v::notEmpty()->usernameAvailable()->alnum()->length(6, 15),
+			"email" => v::notEmpty()->email()->emailAvailable(),
 			"password" => v::notEmpty()->length(8, null),
 			"cpassword" => v::passwdMatch($request->getParam("password"))
 		]);
