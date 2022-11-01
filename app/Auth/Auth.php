@@ -91,6 +91,13 @@ class Auth {
 		session_regenerate_id(true);
 	}
 
+	public function logout()
+	{
+		unset($_SESSION[self::SESSION]);
+		$this->user = null;
+		$this->state = self::NONE;
+	}
+
 	public function getError(): ?string
 	{
 		return $this->error;
