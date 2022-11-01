@@ -42,6 +42,10 @@ class UserController extends Controller {
 	public function ajaxCreate($request, $response)
 	{
 		$listaData = filter_var_array($request->getParams(), FILTER_SANITIZE_STRING);
+
+		
+		$callback["csrf"] = getCsrfCode($this->csrf);
+
 		if (in_array("", $listaData)) {
 			$callback["message"] = "Preencha todos os campos!";
 			echo json_encode($callback);
@@ -57,7 +61,6 @@ class UserController extends Controller {
 		$callback["user"] = $this->view->fetch("user/item.twig", [
 			"item" => $item
 		]);
-		$callback["csrf"] = getCsrfCode($this->csrf);
 
 		echo json_encode($callback);
 	}

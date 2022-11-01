@@ -72,3 +72,8 @@ $container["AuthController"] = function ($container) {
 $container["UserController"] = function ($container) {
 	return new App\Controllers\UserController($container);
 };
+
+// admin
+$container["BaseControllerAdmin"] = function ($container) {
+	return new App\Controllers\Admin\BaseController($container);
+};

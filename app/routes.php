@@ -39,3 +39,11 @@ $app->group("/user", function ($container) use ($app) {
 
 })->add(new App\Middleware\AuthMiddleware($container));
 
+
+$app->group("/admin", function ($container) use ($app) {
+
+
+	$app->get("/home", "BaseControllerAdmin:home")->setName("admin.home");
+
+})->add(new App\Middleware\AdminMiddleware($container));
+
