@@ -119,6 +119,36 @@ class Auth {
 		}
 	}
 
+	public function toChangePw(array $params): bool
+	{
+		//var_dump($params);
+
+		$npw = $params["npassword"];
+		$cpw = $params["cpassword"];
+		$pw = $params["password"];
+
+		if (strlen($npw) < 8) {
+			$this->error = "A nova senha deve conter no mínimo 8 caracteres";
+			return false;
+		}
+		if ($npw !== $cpw) {
+			$this->error = "As senhas inseridas não conferem.";
+			return false;
+		}
+		if (!password_verify($pw, $this->user->password)) {
+			$this->error = "A senha inserida está incorreta.";
+			return false;
+		}
+		if ($npw === $pw) {
+			$this->error = "Por favor, insira uma senha diferente da atual.";
+			return false;
+		}
+
+		$this->user->changePassword($npw);
+
+		return true;
+	}
+
 	public function getError(): ?string
 	{
 		return $this->error;

@@ -19,5 +19,17 @@ $app->group("/auth", function ($container) use ($app) {
 })->add(new App\Middleware\GhostMiddleware($container));
 
 
-//
-$app->get("/logout", "AuthController:logout")->setName("logout");
+
+$app->group("/user", function ($container) use ($app) {
+
+
+	$app->get("/changepw", "UserController:changePassword")->setName("changepw");
+	$app->post("/changepw", "UserController:postChangePassword");
+
+
+	// logout
+	$app->get("/logout", "AuthController:logout")->setName("logout");
+
+
+});
+

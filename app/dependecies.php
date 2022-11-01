@@ -69,3 +69,6 @@ $container["HomeController"] = function ($container) {
 $container["AuthController"] = function ($container) {
 	return new App\Controllers\AuthController($container);
 };
+$container["UserController"] = function ($container) {
+	return new App\Controllers\UserController($container);
+};

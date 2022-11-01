@@ -17,4 +17,14 @@ class User extends Model {
 		"password"
 	];
 
+	public function changePassword($new)
+	{
+		if (!password_get_info($npw)["algo"]) {
+			$new = password_hash($new, PASSWORD_DEFAULT);
+		}
+
+		$this->password = $new;
+		return $this->save();
+	}
+
 }
