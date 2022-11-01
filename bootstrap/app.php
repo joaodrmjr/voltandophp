@@ -19,7 +19,7 @@ $app = new \Slim\App($config);
 require __DIR__ . "/../app/dependecies.php";
 
 
-require __DIR__ . "/../app/midleware.php";
+require __DIR__ . "/../app/middleware.php";
 
 
 // rotas da aplicação
