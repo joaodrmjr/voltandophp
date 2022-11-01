@@ -101,13 +101,6 @@ class Auth {
 			);
 		}
 
-		$rcookie = self::REMEMBER;
-		if (isset($_COOKIE[$rcookie])) {
-			$hash = $_COOKIE[$rcookie];
-			setcookie($rcookie, null, time()-1, "/");
-			UserSession::where("session", $hash)->where("user_agent", userAgentNoVersion())->delete();
-		}
-
 		// muda o id da sessao sempre que loga
 		session_regenerate_id(true);
 	}
@@ -117,6 +110,13 @@ class Auth {
 		unset($_SESSION[self::SESSION]);
 		$this->user = null;
 		$this->state = self::NONE;
+
+		$rcookie = self::REMEMBER;
+		if (isset($_COOKIE[$rcookie])) {
+			$hash = $_COOKIE[$rcookie];
+			setcookie($rcookie, null, time()-1, "/");
+			UserSession::where("session", $hash)->where("user_agent", userAgentNoVersion())->delete();
+		}
 	}
 
 	public function getError(): ?string

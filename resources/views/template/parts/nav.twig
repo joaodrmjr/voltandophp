@@ -37,14 +37,14 @@
                         </li>
                     </ul>
                 </li>
-                {% endif %}
-                    
+                {% else %}
                 <li>
                     <a href="{{ path_for('login') }}">Login</a>
                 </li>
                 <li>
-                    <a href="{{ path_for('register') }}">Cadastrar</a>
+                    <a href="{{ path_for('register') }}">+ Cadastrar</a>
                 </li>
+                {% endif %}
             </ul>
         </div>
 	</div>
