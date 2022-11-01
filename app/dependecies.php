@@ -24,6 +24,11 @@ $container["validation"] = function ($container) {
 };
 v::with("App\\Validation\\Rules\\");
 
+
+$container["csrf"] = function ($container) {
+	return new Slim\Csrf\Guard();	
+};
+
 $container["flash"] = function () {
 	return new Slim\Flash\Messages();
 };
