@@ -38,7 +38,7 @@ class Auth {
 		$userId = $_SESSION[self::SESSION] ?? null;
 		if ($userId && $user = User::find($userId)) {
 			$this->user = $user;
-			$this->state = $user->admin ? self::LOGGED : self::LOGGED;
+			$this->state = $user->admin ? self::ADMIN : self::LOGGED;
 			return;
 		}
 

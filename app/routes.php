@@ -31,5 +31,5 @@ $app->group("/user", function ($container) use ($app) {
 	$app->get("/logout", "AuthController:logout")->setName("logout");
 
 
-});
+})->add(new App\Middleware\AuthMiddleware($container));
 
