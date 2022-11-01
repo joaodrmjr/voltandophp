@@ -5,10 +5,12 @@ namespace App\Auth;
 
 
 use App\Models\User;
+use App\Models\UserSession;
 
 class Auth {
 
 	const SESSION = "user_id";
+	const REMEMBER = "ruser";
 
 	const NONE = 0;
 	const LOGGED = 1;
@@ -86,6 +88,18 @@ class Auth {
 		$_SESSION[self::SESSION] = $user->id;
 		$this->user = $user;
 		$this->state = $user->admin ? self::ADMIN : self::LOGGED;
+
+		// remember
+		if ($remember) {
+			$hash = generateToken1();
+			$uagent = userAgentNoVersion();
+			$expiry = time()+60*60*24*30;
+			setcookie(self::REMEMBER, $hash, $expiry, "/");
+			UserSession::updateOrCreate(
+				[ "user_id" => $user->id, "user_agent" => $uagent ],
+				[ "session" => $hash, "expiry" => $expiry ]
+			);
+		}
 
 		// muda o id da sessao sempre que loga
 		session_regenerate_id(true);

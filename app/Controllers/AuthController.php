@@ -19,11 +19,7 @@ class AuthController extends Controller {
 
 	public function postLogin($request, $response)
 	{
-		$login = $this->auth->tryLogin([
-			"username" => $request->getParam("username"),
-			"password" => $request->getParam("password")
-		]);
-		if (!$login) {
+		if (!$this->auth->tryLogin($request->getParams())) {
 			$this->flash->addMessage("error", $this->auth->getError());
 			return $response->withRedirect($this->router->pathFor("login"));
 		}
