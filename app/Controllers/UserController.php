@@ -57,6 +57,7 @@ class UserController extends Controller {
 		$callback["user"] = $this->view->fetch("user/item.twig", [
 			"item" => $item
 		]);
+		$callback["csrf"] = getCsrfCode($this->csrf);
 
 		echo json_encode($callback);
 	}

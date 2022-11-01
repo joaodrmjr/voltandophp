@@ -21,7 +21,9 @@
 					</div>
 				</div>
 
-				{{ csrf.field | raw }}
+				<div class="csrf">
+					{{ csrf.field | raw }}
+				</div>
 				
 				<div class="mt20">
 					<input type="submit" class="btn btn-primary btn-block" value="+ Inserir">
@@ -82,6 +84,7 @@
 						alert(callback.message);
 					}
 
+					$(".csrf").html(callback.csrf);
 
 					lista.prepend(callback.user);
 
