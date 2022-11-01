@@ -13,3 +13,30 @@ body {
 	color: #FFF;
 	border-radius: 0.5em;
 }
+
+
+.mt20 {
+	margin-top: 20px;
+}
+
+
+#lista {
+
+}
+
+#lista .col {
+	padding: 15px 10px;
+	background: #DDD;
+	margin-top: 10px;
+}
+#lista .col span {
+
+	font-size: 18px;
+
+
+}
+#lista .col a {
+	float: right;
+	
+
+}

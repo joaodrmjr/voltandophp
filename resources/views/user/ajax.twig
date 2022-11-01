@@ -1,0 +1,114 @@
+{% extends 'template/app.twig' %}
+
+
+
+{% block content %}
+
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<form class="form_ajax" action="{{ path_for('ajax.create') }}" method="post">
+
+			<div class="form-group">
+
+				<div class="row">
+
+					<div class="col-lg-6">
+						<input type="text" name="name" class="form-control" placeholder="Nome">
+					</div>
+
+					<div class="col-lg-6">
+						<input type="text" name="lastname" class="form-control" placeholder="Sobrenome">
+					</div>
+				</div>
+
+				{{ csrf.field | raw }}
+				
+				<div class="mt20">
+					<input type="submit" class="btn btn-primary btn-block" value="+ Inserir">
+				</div>
+			</div>
+		</form>
+
+		<hr>
+
+		<div id="lista">
+
+			{% for item in lista %}
+			{% include 'user/item.twig' %}
+			{% endfor %}
+
+
+
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script type="text/javascript">
+	$(function() {
+
+		function load(action) {
+
+			var load_div = $(".ajax_load");
+			if (action === "open") {
+				load_div.fadeIn().css("display", "block");
+			}else {
+				load_div.fadeOut();
+			}
+
+		};
+
+		$("form").submit(function (e) {
+
+			e.preventDefault();
+
+			var form = $(this);
+			var form_ajax = $(".form_ajax");
+			var lista = $("#lista");
+
+			$.ajax({
+				url: form.attr("action"),
+				data: form.serialize(),
+				type: "POST",
+				dataType: "json",
+				beforeSend: function () {
+					
+				},
+				success: function (callback) {
+					if (callback.message) {
+						alert(callback.message);
+					}
+
+
+					lista.prepend(callback.user);
+
+
+				},
+				complete: function () {
+					
+				}
+			});
+
+		});
+
+		$("body").on("click", "[data-action]", function (e) {
+
+			e.preventDefault();
+			var data = $(this).data();
+			var div = $(this).parent();
+
+			$.get(data.action, data, function () {
+				div.fadeOut();
+			}, "json").fail(function () {
+				alert("Erro ao processar requisição ajax!");
+			});
+
+		});
+
+	});
+</script>
+
+{% endblock %}
